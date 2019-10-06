@@ -1,13 +1,17 @@
 import pandas as pd
 import os
 from data_num import clean_num
+from data_cat import clean_cat
 
 
-def drop_columns():
+def drop_columns(cars):
     """
     función que borrar las columnas que pienso que no son
     importantes
     """
+
+    columns_drop = ["county_fips", "county_name", "state_fips", "state_code"]
+    cars= cars.drop(columns=columns_drop, axis = 1, inplace= True)
 
 def get_datase(name = "cars_train.csv"):
     """
@@ -30,7 +34,9 @@ def clean_datos():
 
     # obtengo el directorio del fichero
     cars = get_datase()
-    clean_num(cars)
+    drop_columns(cars)
+    #clean_num(cars)
+    clean_cat(cars)
 
 
 

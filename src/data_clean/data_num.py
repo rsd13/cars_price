@@ -1,19 +1,15 @@
-
-
-
-def clean_year(cars):
+def clean_mean(cars, column):
     """
-    funcion que limpia de nulos los años
-    :param cars:  dataset
-    :return: devuelve el dataframe con el año limpiado
+    funcion que limpia una columna del datagrame a través de la media
+    :param cars: dataframe a limpiar
+    :param column: columba a limpiar
     """
-    mean = int(cars.year.mean())
-    cars.loc[cars['year'].isnull(), 'year'] = mean
 
-    #asi ocupa menos el dataset
-    cars["year"] = cars["year"].astype(int)
+    mean = int(cars[column].mean())
+    cars.loc[cars[column].isnull(), column ] = mean
 
-
+    # asi ocupa menos el dataset
+    cars[column] = cars[column].astype(int)
 
 def clean_num(cars):
     """
@@ -22,7 +18,7 @@ def clean_num(cars):
     """
 
     #columnas con nulos enteros (lo se por el estudio hecho previamente en jupyter)
-    cols_nulls_int = ["year", "make", "cylinders", "county_fips", "weather", "state_fips"]
+    cols_nulls_int = ["year", "odometer", "weather"]
+    for col in cols_nulls_int:
+        clean_mean(cars, col)
 
-    clean_year(cars)
-    print(cars.year.dtypes)
